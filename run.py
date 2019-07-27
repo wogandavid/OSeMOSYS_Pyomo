@@ -19,15 +19,22 @@ opt = SolverFactory('glpk')
 results = opt.solve(instance)
 #instance.display()
 
-print('Solve FINISHED')
+print('--- Solve FINISHED ---')
+
+my_dict = yaml.safe_load(open('results.yml'))
+abc = my_dict['Solution'][1]['Variable']
+
+dfResults =  pd.DataFrame.from_dict(abc, orient='index' )
+dfResults.reset_index(level=0, inplace=True)
+dfResults.rename({'index':'old'}, axis=1, inplace=True)
+
+
 
 # http://hselab.org/pyomo-get-variable-values.html
 # http://math.jacobs-university.de/oliver/teaching/jacobs/spring2016/ilme202/files/
 # http://math.jacobs-university.de/oliver/teaching/jacobs/spring2016/ilme202/files/20160210d-HL-A3_1-Steelworks.html
  
 #res = instance.NewCapacity.get_values()
-
-
 
 # or
 #list_of_vars =[v.get_values() for v in instance.component_objects(ctype=Var, active=True, descend_into=True)]
@@ -37,43 +44,15 @@ print('Solve FINISHED')
 #print(list_of_vars)
 #print(var_names)
 
+## YAML stuff
 
-
-
-
-
-
-
-# from yaml
+#from yaml
 #import yaml
 #import yamlordereddictloader
+
  
 #with open("results.yml") as f:
 #    yaml_data = yaml.load(f, Loader=yamlordereddictloader.Loader)
-
-# using the PULP code
-# save the results
-#from pulp_report import *
-#results_df = pd.DataFrame(columns=[
-#        'SCENARIO',
-#        'VAR_NAME',
-#        'VAR_VALUE',
-#        'REGION',
-#        'REGION2',
-#        'DAYTYPE',
-#        'EMISSION',
-#        'FUEL',
-#        'DAILYTIMEBRACKET',
-#        'SEASON',
-#        'TIMESLICE',
-#        'MODE_OF_OPERATION',
-#       'STORAGE',
-#       'TECHNOLOGY',
-#       'YEAR',
-#        'FLEXIBLEDEMANDTYPE'])
-
-#results_df = save_results_to_dataframe(results_df, instance, 'utopia')
-#print("Results are saved. -- Current date/time:", dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 #import pandas as pd
 
